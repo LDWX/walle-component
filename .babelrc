@@ -1,0 +1,19 @@
+{
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",  // 用于支持ES6解构语法
+    [ // 用于支持ES7 async/await语法
+      "@babel/plugin-transform-runtime", {
+        "absoluteRuntime": false,
+        "corejs": false,
+        "helpers": true,
+        "regenerator": true,
+        "useESModules": false,
+        "version": "7.7.6"
+      }
+    ]
+    // "@babel/plugin-transform-async-to-generator"
+  ]
+}
