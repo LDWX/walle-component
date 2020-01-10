@@ -1,6 +1,6 @@
 'use strict'
+
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyPlugin = require('uglifyjs-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -8,19 +8,21 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.config.js')
 
-
-const prodWebpackConfig = merge(baseWebpackConfig, {
-  mode: 'production',
+const componentConfig = merge(baseWebpackConfig, {
+  mode: "production",
   devtool: 'source-map',
-  entry: {
-    app: './src/index.js',
-    // another: './src/another-module.js',
+  entry:  {
+    components: './src/component.js',
   },
   output: {
-    filename: "[name].[contenthash].js",
-    chunkFilename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, '../dist')
+    path: path.resolve(__dirname, "../packages"),
+    filename: "index.js",
+    libraryTarget: "commonjs2"
+
   },
+  externals: {
+    Vue: 'vue'
+  },  
   module: {
     rules: [
       {
@@ -56,14 +58,8 @@ const prodWebpackConfig = merge(baseWebpackConfig, {
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:7].css',
       chunkFilename: '[id].[contenthash:7].css'
-    }),
-    // 自动将html与js关联起来
-    new HtmlWebpackPlugin({
-      title: 'Output Mangement',
-      filename: 'index.html',
-      template: 'public/index.html'
-    }),
+    })
   ]
 })
 
-module.exports = prodWebpackConfig
+module.exports = componentConfig

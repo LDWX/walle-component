@@ -1,6 +1,4 @@
 'use strict'
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const {
@@ -70,13 +68,7 @@ module.exports = {
     // 清除上次打包的代码
     new CleanWebpackPlugin(),
     // 为chunk命名
-    new webpack.NamedChunksPlugin(),
-    // 自动将html与js关联起来
-    new HtmlWebpackPlugin({
-      title: 'Output Mangement',
-      filename: 'index.html',
-      template: 'public/index.html'
-    }),
+    new webpack.NamedChunksPlugin(),    
     new VueLoaderPlugin()
   ]
 }

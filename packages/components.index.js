@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["components"],{opCo:function(n,o,i){"use strict";function t(){console.log("this is print")}function s(){console.log("this is scan")}i.r(o),i.d(o,"print",(function(){return t})),i.d(o,"scan",(function(){return s}))}},[["opCo","runtime"]]]);
+//# sourceMappingURL=components.index.js.map

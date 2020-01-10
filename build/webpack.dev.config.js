@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const merge = require('webpack-merge')
@@ -38,7 +39,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
-    })
+    }),
+    // 自动将html与js关联起来
+    new HtmlWebpackPlugin({
+      title: 'Output Mangement',
+      filename: 'index.html',
+      template: 'public/index.html'
+    }),
   ]
 })
 
