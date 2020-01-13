@@ -1,14 +1,16 @@
 {
   "name": "walle-component",
-  "version": "0.2.1",
-  "description": "",
-  "main": "./packages/index.js",
+  "version": "0.2.13",
+  "description": "此脚手架只是提供了最基本的功能，比如：\r - 开发环境js热部署\r - 生产环境代码压缩，提取公共包， runtime包，tree shaking, 抽取css文件",
+  "main": "lib/component.bundle.js",
   "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devServer": "node build/dev-server.js",
-    "build": "weback --config build/webpack.prod.config.js",
-    "component": "webpack --config build/webpack.component.js"
+    "build": "webpack --config build/webpack.prod.config.js",
+    "component": "webpack --config build/webpack.component.js",
+    "start": "node server.js",
+    "publish": "npm run component && npm publish"
   },
   "author": "walle",
   "license": "ISC",
@@ -29,6 +31,7 @@
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.0",
     "papaparse": "^5.1.1",
+    "progress-bar-webpack-plugin": "^1.12.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.1.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
@@ -44,5 +47,16 @@
     "@babel/runtime": "^7.7.7",
     "lodash": "^4.17.15",
     "vue": "^2.6.11"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LDWX/walle-component.git"
+  },
+  "keywords": [
+    "walleui"
+  ],
+  "bugs": {
+    "url": "https://github.com/LDWX/walle-component/issues"
+  },
+  "homepage": "https://github.com/LDWX/walle-component#readme"
 }

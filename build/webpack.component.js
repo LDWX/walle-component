@@ -1,65 +1,56 @@
 'use strict'
+const path = require('path');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-const path = require('path')
-const UglifyPlugin = require('uglifyjs-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.config.js')
-
-const componentConfig = merge(baseWebpackConfig, {
+const componentConfig = {
   mode: "production",
-  devtool: 'source-map',
-  entry:  {
-    components: './src/component.js',
-  },
+  entry: "./src/component.js",
   output: {
-    path: path.resolve(__dirname, "../packages"),
-    filename: "index.js",
+    path: path.resolve(process.cwd(), './lib'),
+    filename: "component.bundle.js",
+    chunkFilename: '[name].bundle.js',
     libraryTarget: "commonjs2"
-
   },
-  externals: {
-    Vue: 'vue'
-  },  
+  optimization: {
+    minimize: false
+  },
   module: {
     rules: [
       {
-        test: /\.(css|sass|scss)$/i,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              // publicPath: (resourcePath, context) => {
-              //   return path.relative(path.dirname(resourcePath), context) + '/'
-              // },
-              esModule: true
-            }
-          },
-          // 'vue-style-loader',
-          // 'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        test: /\.(jsx?|babel|es6)$/,
+        include: process.cwd(),
+        exclude: /node_modules|utils\/popper\.js|utils\/date\.js/,
+        loader: 'babel-loader'
       },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          compilerOptions: {
+            preserveWhitespace: false
+          }
+        }
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(svg|otf|ttf|woff2?|eot|gif|png|jpe?g)(\?\S*)?$/,
+        loader: 'url-loader',
+        query: {
+          limit: 10000,
+          name: path.posix.join('static', '[name].[hash:7].[ext]')
+        }
+      }
     ]
   },
   plugins: [
-    // 对代码进行压缩
-    new UglifyPlugin({
-      sourceMap: true
-    }),
-    // 定义环境变量，使其能够在项目中使用
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-    // 将css文件单独抽取出来
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:7].css',
-      chunkFilename: '[id].[contenthash:7].css'
-    })
+    new ProgressBarPlugin(),
+    new VueLoaderPlugin()
   ]
-})
+}
 
 module.exports = componentConfig

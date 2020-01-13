@@ -1,10 +1,26 @@
+import packages from '../package.json'
 
+import Button from "../packages/button/index.js"
+import Input from "../packages/input/index.js"
 
+const components = [
+  Button,
+  Input
+]
 
-export function print() {
-  console.log('this is print')
+const install = function(Vue, opts = {}) {
+  components.forEach(component => {
+    Vue.component(component.name, component)
+  })
 }
 
-export function scan() {
-  console.log('this is scan')
+if (typeof window !== 'undefined' && window.Vue) {
+  install(window.vue)
+}
+
+export default {
+  version: packages.version,
+  install,
+  Button,
+  Input
 }
